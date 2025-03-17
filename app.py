@@ -3,25 +3,27 @@ import pandas as pd
 import os
 
 app = Flask(__name__)
-app.config['DEBUG'] = True  # Habilita el modo depuración
+app.config['DEBUG'] = True  # Modo depuración activado
 
-# Cargar la base de datos correctamente
-db_path = os.path.join(os.path.dirname(__file__), 'Compuestos.csv')
+# Buscar la ubicación correcta de 'Compuestos.csv'
+db_filename = 'Compuestos.csv'
+db_path = os.path.join(os.path.dirname(__file__), db_filename)
 
-try:
-    df = pd.read_csv(db_path)  # Intenta cargar la base de datos
-except FileNotFoundError:
+# Verificar si el archivo existe antes de cargarlo
+if os.path.exists(db_path):
+    df = pd.read_csv(db_path)
+else:
     df = None
-    print("⚠️ Error: No se encontró 'Compuestos.csv'.")
+    print(f"⚠️ Error: No se encontró '{db_filename}'. Verifica que el archivo esté en la raíz del proyecto.")
 
-# Función para buscar una fórmula en el DataFrame
+# Función para buscar una fórmula
 def buscar_formula(formula):
     if df is None:
-        return None  # No hay base de datos cargada
+        return None  # Si no hay base de datos cargada, devuelve None
     resultados = df[df['Formula'] == formula]
     return resultados if not resultados.empty else None
 
-# Página principal
+# Ruta para la página principal
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -30,7 +32,7 @@ def index():
 @app.route('/buscar', methods=['POST'])
 def buscar():
     try:
-        formula = request.form.get('formula')  # Evita errores de KeyError
+        formula = request.form.get('formula')  # Evita errores si el campo está vacío
         if not formula:
             return render_template('resultado.html', error="⚠️ Debes ingresar una fórmula.")
 
@@ -40,7 +42,7 @@ def buscar():
                                resultados=resultados.to_html() if resultados is not None else None,
                                error="Fórmula no encontrada" if resultados is None else None)
     except Exception as e:
-        return f"❌ Error interno: {str(e)}", 500  # Manejo de errores
+        return f"❌ Error interno: {str(e)}", 500  # Mensaje de error más claro
 
 # Ejecutar en local
 if __name__ == '__main__':
