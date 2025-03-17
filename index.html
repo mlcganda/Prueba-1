@@ -1,29 +1,16 @@
-from flask import Flask, render_template, request
-import pandas as pd
-
-app = Flask(__name__)
-
-# Cargar la base de datos
-df = pd.read_csv('data/Compuestos.csv')
-
-def buscar_formula(formula):
-    """Busca una fórmula en la base de datos y devuelve los resultados."""
-    resultados = df[df['Formula'].str.lower() == formula.lower()]
-    return resultados.to_dict(orient='records') if not resultados.empty else None
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/buscar', methods=['POST'])
-def buscar():
-    formula = request.form['formula']
-    resultados = buscar_formula(formula)
-    
-    if resultados:
-        return render_template('resultado.html', formula=formula, resultados=resultados)
-    else:
-        return render_template('resultado.html', formula=formula, error="Fórmula no encontrada")
-
-if __name__ == '__main__':
-    app.run(debug=True)
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Fórmulas Químicas</title>
+</head>
+<body>
+    <h1>Buscador de Fórmulas Químicas</h1>
+    <form action="/buscar" method="post">
+        <label for="formula">Introduce una fórmula química:</label>
+        <input type="text" id="formula" name="formula" required>
+        <button type="submit">Buscar</button>
+    </form>
+</body>
+</html>
