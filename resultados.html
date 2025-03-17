@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados para {{ formula }}</title>
+</head>
+<body>
+    <h1>Resultados para {{ formula }}</h1>
+    
+    {% if resultados %}
+        <table border="1">
+            <tr>
+                <th>Fórmula</th>
+                <th>Nomenclatura Tradicional</th>
+                <th>Nomenclatura Sistemática</th>
+                <th>Nomenclatura Stock</th>
+            </tr>
+            {% for resultado in resultados %}
+            <tr>
+                <td>{{ resultado['Formula'] }}</td>
+                <td>{{ resultado['Tradicional'] }}</td>
+                <td>{{ resultado['Sistematica'] }}</td>
+                <td>{{ resultado['Stock'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    
+    <a href="/">Volver a buscar</a>
+</body>
+</html>
