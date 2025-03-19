@@ -1,7 +1,6 @@
 /* static/styles.css */
 body {
-    font-family: 'Arial', sans-serif;
-    background-image: url("{{ url_for('static', filename='fondo_quimico.jpg') }}"); /* Ruta de la imagen de fondo */
+    background-image: url("{{ url_for('static', filename='fondo_quimico.jpg') }}");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
