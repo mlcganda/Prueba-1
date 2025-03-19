@@ -55,8 +55,6 @@ def buscar_compuesto(tipo_busqueda, valor_busqueda, nomenclatura_devolver=None):
             (df['Stock'].str.lower() == valor_busqueda.lower()) |
             (df['Tradicional'].str.lower() == valor_busqueda.lower())
         ]
-        # Devolver solo las columnas necesarias
-        resultados = resultados[['Formula', 'Sistematica', 'Stock', 'Tradicional']]
     else:
         return None  # Tipo de búsqueda no válido
     
@@ -92,7 +90,7 @@ def buscar():
 
         return render_template('resultados.html', titulo=TITULO, tipo_busqueda=tipo_busqueda,
                                valor_busqueda=valor_busqueda,
-                               resultados=resultados,
+                               resultados=resultados.to_html(classes="tabla-resultados", index=False) if resultados is not None else None,
                                error="No se encontraron resultados." if resultados is None else None)
     except Exception as e:
         return render_template('resultados.html', titulo=TITULO, error=f"❌ Error interno: {str(e)}"), 500
