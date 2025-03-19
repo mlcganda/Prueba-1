@@ -1,34 +1,26 @@
+<!-- templates/resultados.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados para {{ formula }}</title>
+    <title>Resultados de Búsqueda</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Resultados para {{ formula }}</h1>
-    
-    {% if resultados %}
-        <table border="1">
-            <tr>
-                <th>Fórmula</th>
-                <th>Nomenclatura Tradicional</th>
-                <th>Nomenclatura Sistemática</th>
-                <th>Nomenclatura Stock</th>
-            </tr>
-            {% for resultado in resultados %}
-            <tr>
-                <td>{{ resultado['Formula'] }}</td>
-                <td>{{ resultado['Tradicional'] }}</td>
-                <td>{{ resultado['Sistematica'] }}</td>
-                <td>{{ resultado['Stock'] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    
+    <h1>Resultados de Búsqueda</h1>
     <a href="/">Volver a buscar</a>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% else %}
+        <div class="resultados">
+            <h2>Fórmula: {{ formula }}</h2>
+            {% if resultados %}
+                {{ resultados | safe }}
+            {% else %}
+                <p class="error">Fórmula no encontrada.</p>
+            {% endif %}
+        </div>
+    {% endif %}
 </body>
 </html>
