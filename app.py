@@ -1,48 +1,60 @@
-import os
-import pandas as pd
-from flask import Flask, render_template, request
+# abrir base de datos compuestos.csv con pandas
+df = pd.read_csv('Compuestos.csv')
+from IPython.display import display
+from ipywidgets import Dropdown, Output, Text
 
-app = Flask(__name__)
-app.config['DEBUG'] = True  # Modo depuración activado
+# definimos función para buscar en la columna Fórmula
 
-# Definir la ruta correcta para `Compuestos.csv`
-db_path = os.path.join(os.path.dirname(__file__), 'data', 'Compuestos.csv')
+def buscar_formula(formula,dfdatos):
+  """
+  Busca una fórmula específica en la columna 'Fórmula' del DataFrame df.
 
-# Verificar si el archivo existe antes de cargarlo
-if os.path.exists(db_path):
-    df = pd.read_csv(db_path)
-else:
-    df = None
-    print(f"⚠️ Error: No se encontró '{db_path}'. Verifica que el archivo esté en la carpeta 'data/'.")
+  Args:
+    formula: La fórmula a buscar.
 
-# Función para buscar una fórmula
-def buscar_formula(formula):
-    if df is None:
-        return None  # Si no hay base de datos cargada, devuelve None
-    resultados = df[df['Formula'] == formula]
-    return resultados if not resultados.empty else None
+  Returns:
+    Un DataFrame con las filas que contienen la fórmula especificada, o None si no se encuentra.
+  """
+  resultados = dfdatos[dfdatos['Formula'] == formula]
+  if not resultados.empty:
+      return resultados
+  else:
+      return None
 
-# Ruta para la página principal
-@app.route('/')
-def index():
-    return render_template('index.html')
+# Crear un widget Dropdown con opciones de nomenclatura
+nomenclatura_options = {
+    'Todas': 'Todas',
+    'Nomenclatura Tradicional': 'Tradicional',
+    'Nomenclatura Sistemática': 'Sistematica',
+    'Nomenclatura Stock': 'Stock'
+}
+nomenclatura_dropdown = Dropdown(options=nomenclatura_options, description='Nomenclatura:')
+formula_input = Text(value='', description='Fórmula:')  # Input para la fórmula
+output = Output()
 
-# Ruta para la búsqueda
-@app.route('/buscar', methods=['POST'])
-def buscar():
-    try:
-        formula = request.form.get('formula')  # Evita errores si el campo está vacío
-        if not formula:
-            return render_template('resultados.html', error="⚠️ Debes ingresar una fórmula.")
+# Define a function to update the output when the dropdown value changes
+def on_value_change(change):
+    with output:
+        output.clear_output()
+        selected_nomenclatura = nomenclatura_dropdown.value
+        formula = formula_input.value
+        resultados = buscar_formula(formula, df)
+        if resultados is not None:
+            if selected_nomenclatura == 'Todas':
+              display(resultados[['Tradicional', 'Sistematica', 'Stock']])
+            elif selected_nomenclatura in resultados.columns:
+                if not resultados[selected_nomenclatura].isnull().all():
+                    display(resultados[selected_nomenclatura])
+                else:
+                    print(f"No hay información disponible para la nomenclatura {nomenclatura_dropdown.label} de la formula {formula}")
+            else:
+                print("Nomenclatura no válida.")
+        else:
+            print(f"No se encontró la fórmula: {formula}")
 
-        resultados = buscar_formula(formula)
+nomenclatura_dropdown.observe(on_value_change, names='value')
+formula_input.observe(on_value_change, names='value')
 
-        return render_template('resultados.html', formula=formula, 
-                               resultados=resultados.to_html() if resultados is not None else None,
-                               error="Fórmula no encontrada" if resultados is None else None)
-    except Exception as e:
-        return f"❌ Error interno: {str(e)}", 500  # Mensaje de error más claro
-
-# Ejecutar en local
-if __name__ == '__main__':
-    app.run(debug=True)
+display(formula_input)
+display(nomenclatura_dropdown)
+display(output)
