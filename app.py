@@ -1,4 +1,5 @@
 import os
+import re
 import pandas as pd
 from flask import Flask, render_template, request
 
@@ -14,6 +15,11 @@ if os.path.exists(db_path):
 else:
     df = None
     print(f"⚠️ Error: No se encontró '{db_path}'. Verifica que el archivo esté en la carpeta 'data/'.")
+
+# Función para validar fórmulas químicas
+def validar_formula(formula):
+    patron = re.compile(r'^[A-Z][a-z]?\d*([A-Z][a-z]?\d*)*$')
+    return bool(patron.match(formula))
 
 # Función para buscar una fórmula
 def buscar_formula(formula):
@@ -31,9 +37,13 @@ def index():
 @app.route('/buscar', methods=['POST'])
 def buscar():
     try:
-        formula = request.form.get('formula')  # Evita errores si el campo está vacío
+        formula = request.form.get('formula')  # Obtiene la fórmula del formulario
         if not formula:
             return render_template('resultados.html', error="⚠️ Debes ingresar una fórmula.")
+        
+        # Validar el formato de la fórmula
+        if not validar_formula(formula):
+            return render_template('resultados.html', error="⚠️ La fórmula no tiene un formato válido.")
 
         resultados = buscar_formula(formula)
 
