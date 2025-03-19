@@ -16,7 +16,7 @@ if os.path.exists(db_path):
     try:
         df = pd.read_csv(db_path)
         # Verificar que el archivo tenga las columnas necesarias
-        columnas_requeridas = {'Formula', 'Sistematica', 'Stock', 'Tradicional'}
+        columnas_requeridas = {'Formula', 'Formula2', 'Sistematica', 'Stock', 'Tradicional'}
         if not columnas_requeridas.issubset(df.columns):
             df = None
             print(f"⚠️ Error: El archivo '{db_path}' no tiene las columnas requeridas: {columnas_requeridas}.")
@@ -33,12 +33,12 @@ def buscar_compuesto(tipo_busqueda, valor_busqueda, nomenclatura_devolver=None):
         return None  # Si no hay base de datos cargada o está vacía, devuelve None
     
     if tipo_busqueda == "formula":
-        # Buscar por fórmula
-        resultados = df[df['Formula'].str.lower() == valor_busqueda.lower()]
+        # Buscar por fórmula (usando Formula2)
+        resultados = df[df['Formula2'].str.lower() == valor_busqueda.lower()]
         
         # Filtrar las columnas de nomenclatura según la selección del usuario
         if nomenclatura_devolver == "sistematica":
-            resultados = resultados[['Formula', 'Sistematica']]
+            resultados = resultados[['Formula', 'Sistematica']]  # Mostrar Formula, no Formula2
         elif nomenclatura_devolver == "stock":
             resultados = resultados[['Formula', 'Stock']]
         elif nomenclatura_devolver == "tradicional":
