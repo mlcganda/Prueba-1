@@ -15,58 +15,34 @@ else:
     df = None
     print(f"⚠️ Error: No se encontró '{db_path}'. Verifica que el archivo esté en la carpeta 'data/'.")
 
-# definimos función para buscar en la columna Fórmula
+# Función para buscar una fórmula
+def buscar_formula(formula):
+    if df is None:
+        return None  # Si no hay base de datos cargada, devuelve None
+    resultados = df[df['Formula'] == formula]
+    return resultados if not resultados.empty else None
 
-def buscar_formula(formula,dfdatos):
-  """
-  Busca una fórmula específica en la columna 'Fórmula' del DataFrame df.
+# Ruta para la página principal
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-  Args:
-    formula: La fórmula a buscar.
+# Ruta para la búsqueda
+@app.route('/buscar', methods=['POST'])
+def buscar():
+    try:
+        formula = request.form.get('formula')  # Evita errores si el campo está vacío
+        if not formula:
+            return render_template('resultados.html', error="⚠️ Debes ingresar una fórmula.")
 
-  Returns:
-    Un DataFrame con las filas que contienen la fórmula especificada, o None si no se encuentra.
-  """
-  resultados = dfdatos[dfdatos['Formula'] == formula]
-  if not resultados.empty:
-      return resultados
-  else:
-      return None
+        resultados = buscar_formula(formula)
 
-# Crear un widget Dropdown con opciones de nomenclatura
-nomenclatura_options = {
-    'Todas': 'Todas',
-    'Nomenclatura Tradicional': 'Tradicional',
-    'Nomenclatura Sistemática': 'Sistematica',
-    'Nomenclatura Stock': 'Stock'
-}
-nomenclatura_dropdown = Dropdown(options=nomenclatura_options, description='Nomenclatura:')
-formula_input = Text(value='', description='Fórmula:')  # Input para la fórmula
-output = Output()
+        return render_template('resultados.html', formula=formula, 
+                               resultados=resultados.to_html() if resultados is not None else None,
+                               error="Fórmula no encontrada" if resultados is None else None)
+    except Exception as e:
+        return f"❌ Error interno: {str(e)}", 500  # Mensaje de error más claro
 
-# Define a function to update the output when the dropdown value changes
-def on_value_change(change):
-    with output:
-        output.clear_output()
-        selected_nomenclatura = nomenclatura_dropdown.value
-        formula = formula_input.value
-        resultados = buscar_formula(formula, df)
-        if resultados is not None:
-            if selected_nomenclatura == 'Todas':
-              display(resultados[['Tradicional', 'Sistematica', 'Stock']])
-            elif selected_nomenclatura in resultados.columns:
-                if not resultados[selected_nomenclatura].isnull().all():
-                    display(resultados[selected_nomenclatura])
-                else:
-                    print(f"No hay información disponible para la nomenclatura {nomenclatura_dropdown.label} de la formula {formula}")
-            else:
-                print("Nomenclatura no válida.")
-        else:
-            print(f"No se encontró la fórmula: {formula}")
-
-nomenclatura_dropdown.observe(on_value_change, names='value')
-formula_input.observe(on_value_change, names='value')
-
-display(formula_input)
-display(nomenclatura_dropdown)
-display(output)
+# Ejecutar en local
+if __name__ == '__main__':
+    app.run(debug=True)
