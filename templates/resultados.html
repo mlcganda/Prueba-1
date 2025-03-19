@@ -1,14 +1,13 @@
-<!-- templates/resultados.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados de Búsqueda</title>
+    <title>{{ titulo }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Resultados de Búsqueda</h1>
+    <h1>{{ titulo }}</h1>
     <a href="/">Volver a buscar</a>
     {% if error %}
         <p class="error">{{ error }}</p>
@@ -17,7 +16,7 @@
             <h2>Búsqueda por: {{ tipo_busqueda }}</h2>
             <h3>Valor buscado: {{ valor_busqueda }}</h3>
             {% if resultados %}
-                {{ resultados.to_html(classes="tabla-resultados") | safe }}
+                {{ resultados | safe }}
             {% else %}
                 <p class="error">No se encontraron resultados.</p>
             {% endif %}
