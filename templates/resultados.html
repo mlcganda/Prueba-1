@@ -16,7 +16,7 @@
         <div class="resultados">
             <h2>Búsqueda por: {{ tipo_busqueda }}</h2>
             <h3>Valor buscado: {{ valor_busqueda }}</h3>
-            {% if resultados %}
+            {% if resultados is not none %}
                 <table class="tabla-resultados">
                     <thead>
                         <tr>
