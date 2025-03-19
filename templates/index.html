@@ -1,10 +1,9 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de Compuestos Químicos</title>
+    <title>{{ titulo }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script>
         function mostrarCampoBusqueda() {
@@ -23,7 +22,7 @@
     </script>
 </head>
 <body>
-    <h1>Buscador de Compuestos Químicos</h1>
+    <h1>{{ titulo }}</h1>
     <form action="/buscar" method="POST">
         <label for="tipo_busqueda">Buscar por:</label>
         <select id="tipo_busqueda" name="tipo_busqueda" onchange="mostrarCampoBusqueda()" required>
