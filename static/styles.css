@@ -1,6 +1,8 @@
 /* static/styles.css */
 body {
-    background-image: url("{{ url_for('static', filename='fondo_quimico.jpg') }}");
+    font-family: 'Arial', sans-serif; /* Fuente Arial */
+    background-color: #e6f7ff; /* Color de fondo azul claro */
+    background-image: url("fondo_quimico.jpg"); /* Imagen de fondo química */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -93,14 +95,22 @@ button:hover {
     background-color: #f1f1f1;
 }
 
-a {
+/* Estilo para el botón "Volver a buscar" */
+.boton-volver {
     display: inline-block;
     margin-top: 20px;
-    color: #3498db;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
-a:hover {
-    text-decoration: underline;
+.boton-volver:hover {
+    background-color: #2980b9;
+    text-decoration: none;
 }
