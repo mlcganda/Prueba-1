@@ -2,10 +2,18 @@ import os
 import pandas as pd
 from flask import Flask, render_template, request
 
-# abrir base de datos compuestos.csv con pandas
-df = pd.read_csv('Compuestos.csv')
-from IPython.display import display
-from ipywidgets import Dropdown, Output, Text
+app = Flask(__name__)
+app.config['DEBUG'] = True  # Modo depuración activado
+
+# Definir la ruta correcta para `Compuestos.csv`
+db_path = os.path.join(os.path.dirname(__file__), 'data', 'Compuestos.csv')
+
+# Verificar si el archivo existe antes de cargarlo
+if os.path.exists(db_path):
+    df = pd.read_csv(db_path)
+else:
+    df = None
+    print(f"⚠️ Error: No se encontró '{db_path}'. Verifica que el archivo esté en la carpeta 'data/'.")
 
 # definimos función para buscar en la columna Fórmula
 
