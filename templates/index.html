@@ -1,3 +1,4 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -32,14 +33,17 @@
 
         <div id="campo_formula">
             <input type="text" name="formula" placeholder="Ingresa una fórmula (ej. H2O)">
+            <label for="nomenclatura_devolver">Mostrar nomenclatura:</label>
+            <select name="nomenclatura_devolver">
+                <option value="todas">Todas</option>
+                <option value="sistematica">Sistemática</option>
+                <option value="stock">Stock</option>
+                <option value="tradicional">Tradicional</option>
+            </select>
         </div>
 
         <div id="campo_nomenclatura" style="display: none;">
-            <select name="nomenclatura">
-                <option value="Óxido de dihidrógeno">Sistemática</option>
-                <option value="Óxido de hidrógeno (I)">Stock</option>
-                <option value="Agua">Tradicional</option>
-            </select>
+            <input type="text" name="nomenclatura" placeholder="Ingresa una nomenclatura (ej. Agua)">
         </div>
 
         <button type="submit">Buscar</button>
