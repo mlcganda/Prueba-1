@@ -17,7 +17,26 @@
             <h2>Búsqueda por: {{ tipo_busqueda }}</h2>
             <h3>Valor buscado: {{ valor_busqueda }}</h3>
             {% if resultados %}
-                {{ resultados | safe }}
+                <table class="tabla-resultados">
+                    <thead>
+                        <tr>
+                            <th>Fórmula</th>
+                            <th>Sistemática</th>
+                            <th>Stock</th>
+                            <th>Tradicional</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for _, fila in resultados.iterrows() %}
+                            <tr>
+                                <td>{{ fila['Formula'] }}</td>
+                                <td>{{ fila['Sistematica'] }}</td>
+                                <td>{{ fila['Stock'] }}</td>
+                                <td>{{ fila['Tradicional'] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             {% else %}
                 <p class="error">No se encontraron resultados.</p>
             {% endif %}
