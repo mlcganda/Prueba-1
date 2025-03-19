@@ -21,18 +21,30 @@
                     <thead>
                         <tr>
                             <th>Fórmula</th>
-                            <th>Sistemática</th>
-                            <th>Stock</th>
-                            <th>Tradicional</th>
+                            {% if nomenclatura_devolver == "sistematica" or nomenclatura_devolver == "todas" %}
+                                <th>Sistemática</th>
+                            {% endif %}
+                            {% if nomenclatura_devolver == "stock" or nomenclatura_devolver == "todas" %}
+                                <th>Stock</th>
+                            {% endif %}
+                            {% if nomenclatura_devolver == "tradicional" or nomenclatura_devolver == "todas" %}
+                                <th>Tradicional</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
                         {% for _, fila in resultados.iterrows() %}
                             <tr>
                                 <td>{{ fila['Formula'] }}</td>
-                                <td>{{ fila['Sistematica'] }}</td>
-                                <td>{{ fila['Stock'] }}</td>
-                                <td>{{ fila['Tradicional'] }}</td>
+                                {% if nomenclatura_devolver == "sistematica" or nomenclatura_devolver == "todas" %}
+                                    <td>{{ fila['Sistematica'] }}</td>
+                                {% endif %}
+                                {% if nomenclatura_devolver == "stock" or nomenclatura_devolver == "todas" %}
+                                    <td>{{ fila['Stock'] }}</td>
+                                {% endif %}
+                                {% if nomenclatura_devolver == "tradicional" or nomenclatura_devolver == "todas" %}
+                                    <td>{{ fila['Tradicional'] }}</td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
