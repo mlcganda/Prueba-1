@@ -95,10 +95,11 @@ def buscar():
         if resultados is None or resultados.empty:
             return render_template('resultados.html', titulo=TITULO, error="No se encontraron resultados.")
 
-        # Pasar el DataFrame directamente a la plantilla
+        # Pasar el DataFrame y la nomenclatura seleccionada a la plantilla
         return render_template('resultados.html', titulo=TITULO, tipo_busqueda=tipo_busqueda,
                                valor_busqueda=valor_busqueda,
-                               resultados=resultados,  # Pasar el DataFrame, no el HTML
+                               resultados=resultados,
+                               nomenclatura_devolver=nomenclatura_devolver,  # Pasar la nomenclatura seleccionada
                                error=None)
     except Exception as e:
         return render_template('resultados.html', titulo=TITULO, error=f"❌ Error interno: {str(e)}"), 500
