@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>{{ titulo }}</h1>
-    <a href="/" class="boton-volver">Volver a buscar</a> <!-- Botón "Volver a buscar" -->
+    <a href="/" class="boton-volver">Volver a buscar</a>
     {% if error %}
         <p class="error">{{ error }}</p>
     {% else %}
@@ -35,7 +35,7 @@
                     <tbody>
                         {% for _, fila in resultados.iterrows() %}
                             <tr>
-                                <td>{{ fila['Formula'] }}</td>
+                                <td>{{ fila['Formula2'] }}</td>  <!-- Mostrar Formula2 -->
                                 {% if nomenclatura_devolver == "sistematica" or nomenclatura_devolver == "todas" %}
                                     <td>{{ fila['Sistematica'] }}</td>
                                 {% endif %}
