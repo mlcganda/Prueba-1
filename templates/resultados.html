@@ -35,7 +35,7 @@
                     <tbody>
                         {% for _, fila in resultados.iterrows() %}
                             <tr>
-                                <td>{{ fila['Formula2'] }}</td>  <!-- Mostrar Formula2 -->
+                                <td>{{ fila['Formula2'] }}</td>
                                 {% if nomenclatura_devolver == "sistematica" or nomenclatura_devolver == "todas" %}
                                     <td>{{ fila['Sistematica'] }}</td>
                                 {% endif %}
@@ -54,5 +54,10 @@
             {% endif %}
         </div>
     {% endif %}
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2023 Proyecto Personal - Mateo Martín</p>
+    </div>
 </body>
 </html>
