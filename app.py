@@ -28,13 +28,26 @@ else:
     print(f"⚠️ Error: No se encontró '{db_path}'. Verifica que el archivo esté en la carpeta 'data/'.")
 
 # Función para buscar compuestos
-def buscar_compuesto(tipo_busqueda, valor_busqueda):
+def buscar_compuesto(tipo_busqueda, valor_busqueda, nomenclatura_devolver=None):
     if df is None or df.empty:
         return None  # Si no hay base de datos cargada o está vacía, devuelve None
     
     if tipo_busqueda == "formula":
         # Buscar por fórmula
         resultados = df[df['Formula'].str.lower() == valor_busqueda.lower()]
+        
+        # Filtrar las columnas de nomenclatura según la selección del usuario
+        if nomenclatura_devolver == "sistematica":
+            resultados = resultados[['Formula', 'Sistematica']]
+        elif nomenclatura_devolver == "stock":
+            resultados = resultados[['Formula', 'Stock']]
+        elif nomenclatura_devolver == "tradicional":
+            resultados = resultados[['Formula', 'Tradicional']]
+        elif nomenclatura_devolver == "todas":
+            resultados = resultados[['Formula', 'Sistematica', 'Stock', 'Tradicional']]
+        else:
+            return None  # Opción no válida
+    
     elif tipo_busqueda == "nomenclatura":
         # Buscar por nomenclatura (en las tres columnas)
         resultados = df[
@@ -59,6 +72,7 @@ def buscar():
         tipo_busqueda = request.form.get('tipo_busqueda')  # Obtiene el tipo de búsqueda
         formula = request.form.get('formula')  # Obtiene la fórmula (si se seleccionó)
         nomenclatura = request.form.get('nomenclatura')  # Obtiene la nomenclatura (si se seleccionó)
+        nomenclatura_devolver = request.form.get('nomenclatura_devolver')  # Obtiene la nomenclatura a devolver
 
         if tipo_busqueda == "formula":
             if not formula:
@@ -66,13 +80,13 @@ def buscar():
             valor_busqueda = formula
         elif tipo_busqueda == "nomenclatura":
             if not nomenclatura:
-                return render_template('resultados.html', titulo=TITULO, error="⚠️ Debes seleccionar una nomenclatura.")
+                return render_template('resultados.html', titulo=TITULO, error="⚠️ Debes ingresar una nomenclatura.")
             valor_busqueda = nomenclatura
         else:
             return render_template('resultados.html', titulo=TITULO, error="⚠️ Tipo de búsqueda no válido.")
 
         # Realizar la búsqueda
-        resultados = buscar_compuesto(tipo_busqueda, valor_busqueda)
+        resultados = buscar_compuesto(tipo_busqueda, valor_busqueda, nomenclatura_devolver)
 
         return render_template('resultados.html', titulo=TITULO, tipo_busqueda=tipo_busqueda,
                                valor_busqueda=valor_busqueda,
