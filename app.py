@@ -55,9 +55,12 @@ def buscar_compuesto(tipo_busqueda, valor_busqueda, nomenclatura_devolver=None):
             (df['Stock'].str.lower() == valor_busqueda.lower()) |
             (df['Tradicional'].str.lower() == valor_busqueda.lower())
         ]
+        # Devolver solo las columnas necesarias
+        resultados = resultados[['Formula', 'Sistematica', 'Stock', 'Tradicional']]
     else:
         return None  # Tipo de búsqueda no válido
     
+    # Verificar si el DataFrame está vacío usando .empty
     return resultados if not resultados.empty else None
 
 # Ruta para la página principal
@@ -88,10 +91,14 @@ def buscar():
         # Realizar la búsqueda
         resultados = buscar_compuesto(tipo_busqueda, valor_busqueda, nomenclatura_devolver)
 
+        # Verificar si hay resultados
+        if resultados is None or resultados.empty:
+            return render_template('resultados.html', titulo=TITULO, error="No se encontraron resultados.")
+
         return render_template('resultados.html', titulo=TITULO, tipo_busqueda=tipo_busqueda,
                                valor_busqueda=valor_busqueda,
-                               resultados=resultados.to_html(classes="tabla-resultados", index=False) if resultados is not None else None,
-                               error="No se encontraron resultados." if resultados is None else None)
+                               resultados=resultados.to_html(classes="tabla-resultados", index=False),
+                               error=None)
     except Exception as e:
         return render_template('resultados.html', titulo=TITULO, error=f"❌ Error interno: {str(e)}"), 500
 
