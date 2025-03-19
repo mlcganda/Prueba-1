@@ -1,3 +1,7 @@
+import os
+import pandas as pd
+from flask import Flask, render_template, request
+
 # abrir base de datos compuestos.csv con pandas
 df = pd.read_csv('Compuestos.csv')
 from IPython.display import display
