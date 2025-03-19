@@ -33,18 +33,18 @@ def buscar_compuesto(tipo_busqueda, valor_busqueda, nomenclatura_devolver=None):
         return None  # Si no hay base de datos cargada o está vacía, devuelve None
     
     if tipo_busqueda == "formula":
-        # Buscar por fórmula (usando Formula2)
-        resultados = df[df['Formula2'].str.lower() == valor_busqueda.lower()]
+        # Buscar por fórmula (usando Formula)
+        resultados = df[df['Formula'].str.lower() == valor_busqueda.lower()]
         
         # Filtrar las columnas de nomenclatura según la selección del usuario
         if nomenclatura_devolver == "sistematica":
-            resultados = resultados[['Formula', 'Sistematica']]  # Mostrar Formula, no Formula2
+            resultados = resultados[['Formula2', 'Sistematica']]  # Mostrar Formula2
         elif nomenclatura_devolver == "stock":
-            resultados = resultados[['Formula', 'Stock']]
+            resultados = resultados[['Formula2', 'Stock']]
         elif nomenclatura_devolver == "tradicional":
-            resultados = resultados[['Formula', 'Tradicional']]
+            resultados = resultados[['Formula2', 'Tradicional']]
         elif nomenclatura_devolver == "todas":
-            resultados = resultados[['Formula', 'Sistematica', 'Stock', 'Tradicional']]
+            resultados = resultados[['Formula2', 'Sistematica', 'Stock', 'Tradicional']]
         else:
             return None  # Opción no válida
     
@@ -56,7 +56,7 @@ def buscar_compuesto(tipo_busqueda, valor_busqueda, nomenclatura_devolver=None):
             (df['Tradicional'].str.lower() == valor_busqueda.lower())
         ]
         # Devolver solo las columnas necesarias
-        resultados = resultados[['Formula', 'Sistematica', 'Stock', 'Tradicional']]
+        resultados = resultados[['Formula2', 'Sistematica', 'Stock', 'Tradicional']]
     else:
         return None  # Tipo de búsqueda no válido
     
