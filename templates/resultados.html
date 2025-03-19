@@ -14,11 +14,12 @@
         <p class="error">{{ error }}</p>
     {% else %}
         <div class="resultados">
-            <h2>Fórmula: {{ formula }}</h2>
+            <h2>Búsqueda por: {{ tipo_busqueda }}</h2>
+            <h3>Valor buscado: {{ valor_busqueda }}</h3>
             {% if resultados %}
-                {{ resultados | safe }}
+                {{ resultados.to_html(classes="tabla-resultados") | safe }}
             {% else %}
-                <p class="error">Fórmula no encontrada.</p>
+                <p class="error">No se encontraron resultados.</p>
             {% endif %}
         </div>
     {% endif %}
