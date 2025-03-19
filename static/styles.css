@@ -1,22 +1,30 @@
+/* static/styles.css */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+    background-image: url('fondo_quimico.jpg'); /* Ruta de la imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    color: #333;
 }
 
 h1 {
-    color: #333;
+    color: #2c3e50;
     text-align: center;
+    margin-top: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 form {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     max-width: 500px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 input[type="text"], select {
@@ -24,64 +32,76 @@ input[type="text"], select {
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1em;
+    box-sizing: border-box; /* Evita que el contenido se salga del cuadro */
 }
 
 button {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #3498db;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #2980b9;
 }
 
 .error {
-    color: red;
+    color: #e74c3c;
     font-weight: bold;
     text-align: center;
+    margin-top: 10px;
 }
 
 .resultados {
-    margin-top: 20px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     max-width: 800px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .tabla-resultados {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 .tabla-resultados th, .tabla-resultados td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: left;
 }
 
 .tabla-resultados th {
-    background-color: #f2f2f2;
-}
+    background-color: #3498db;
+    color: #fff;
 }
 
-.error {
-    color: red;
+.tabla-resultados tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tabla-resultados tr:hover {
+    background-color: #f1f1f1;
+}
+
+a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #3498db;
+    text-decoration: none;
     font-weight: bold;
 }
 
-.resultados {
-    margin-top: 20px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+a:hover {
+    text-decoration: underline;
 }
