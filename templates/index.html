@@ -4,13 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de Fórmulas Químicas</title>
+    <title>Buscador de Compuestos Químicos</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function mostrarCampoBusqueda() {
+            const tipoBusqueda = document.getElementById("tipo_busqueda").value;
+            const campoFormula = document.getElementById("campo_formula");
+            const campoNomenclatura = document.getElementById("campo_nomenclatura");
+
+            if (tipoBusqueda === "formula") {
+                campoFormula.style.display = "block";
+                campoNomenclatura.style.display = "none";
+            } else if (tipoBusqueda === "nomenclatura") {
+                campoFormula.style.display = "none";
+                campoNomenclatura.style.display = "block";
+            }
+        }
+    </script>
 </head>
 <body>
-    <h1>Buscador de Fórmulas Químicas</h1>
+    <h1>Buscador de Compuestos Químicos</h1>
     <form action="/buscar" method="POST">
-        <input type="text" name="formula" placeholder="Ingresa una fórmula (ej. H2O)" required>
+        <label for="tipo_busqueda">Buscar por:</label>
+        <select id="tipo_busqueda" name="tipo_busqueda" onchange="mostrarCampoBusqueda()" required>
+            <option value="formula">Fórmula</option>
+            <option value="nomenclatura">Nomenclatura</option>
+        </select>
+
+        <div id="campo_formula">
+            <input type="text" name="formula" placeholder="Ingresa una fórmula (ej. H2O)">
+        </div>
+
+        <div id="campo_nomenclatura" style="display: none;">
+            <select name="nomenclatura">
+                <option value="Óxido de dihidrógeno">Sistemática</option>
+                <option value="Óxido de hidrógeno (I)">Stock</option>
+                <option value="Agua">Tradicional</option>
+            </select>
+        </div>
+
         <button type="submit">Buscar</button>
     </form>
 </body>
