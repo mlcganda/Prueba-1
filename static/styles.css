@@ -1,6 +1,6 @@
 /* static/styles.css */
 body {
-    font-family: 'Arial', sans-serif; /* Fuente Arial */
+    font-family: 'Arial', sans-serif;
     background-color: #e6f7ff; /* Color de fondo azul claro */
     background-image: url("fondo_quimico.jpg"); /* Imagen de fondo química */
     background-size: cover;
@@ -9,6 +9,7 @@ body {
     margin: 0;
     padding: 0;
     color: #333;
+    min-height: 100vh; /* Asegura que el cuerpo ocupe al menos toda la altura de la ventana */
 }
 
 h1 {
@@ -59,6 +60,11 @@ button:hover {
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
+    padding: 10px;
+    background-color: #f8d7da; /* Fondo rojo claro */
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .resultados {
@@ -95,7 +101,6 @@ button:hover {
     background-color: #f1f1f1;
 }
 
-/* Estilo para el botón "Volver a buscar" */
 .boton-volver {
     display: inline-block;
     margin-top: 20px;
@@ -113,4 +118,35 @@ button:hover {
 .boton-volver:hover {
     background-color: #2980b9;
     text-decoration: none;
+}
+
+/* Estilos para los nuevos desplegables */
+.desplegable {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.desplegable h3 {
+    color: #2c3e50;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.desplegable p {
+    color: #333;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+/* Fondo al final de la página */
+.footer {
+    background-color: #e6f7ff; /* Color de fondo azul claro */
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
