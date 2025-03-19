@@ -95,9 +95,10 @@ def buscar():
         if resultados is None or resultados.empty:
             return render_template('resultados.html', titulo=TITULO, error="No se encontraron resultados.")
 
+        # Pasar el DataFrame directamente a la plantilla
         return render_template('resultados.html', titulo=TITULO, tipo_busqueda=tipo_busqueda,
                                valor_busqueda=valor_busqueda,
-                               resultados=resultados.to_html(classes="tabla-resultados", index=False),
+                               resultados=resultados,  # Pasar el DataFrame, no el HTML
                                error=None)
     except Exception as e:
         return render_template('resultados.html', titulo=TITULO, error=f"❌ Error interno: {str(e)}"), 500
