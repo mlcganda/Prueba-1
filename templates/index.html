@@ -1,15 +1,16 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador de Fórmulas Químicas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>Buscador de Fórmulas Químicas</h1>
-    <form action="/buscar" method="post">
-        <label for="formula">Introduce una fórmula química:</label>
-        <input type="text" id="formula" name="formula" required>
+    <form action="/buscar" method="POST">
+        <input type="text" name="formula" placeholder="Ingresa una fórmula (ej. H2O)" required>
         <button type="submit">Buscar</button>
     </form>
 </body>
