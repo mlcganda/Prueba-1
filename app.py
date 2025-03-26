@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True  # Modo depuración activado
 
 # Título personalizado
-TITULO = "PROYECTO PERSONAL - MATEO MARTÍN"
+TITULO = "PROYECTO PERSONAL"
 
 # Definir la ruta correcta para `Compuestos.csv`
 db_path = os.path.join(os.path.dirname(__file__), 'data', 'Compuestos.csv')
